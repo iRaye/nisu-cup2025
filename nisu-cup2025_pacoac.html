@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>주차 할인 쿠폰 구매</title>
+  <meta name="color-scheme" content="light dark">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Apple SD Gothic Neo, Noto Sans KR, Arial, sans-serif;
+      background: #fafafa; color: #111; margin: 0; padding: 20px;
+    }
+    .card {
+      max-width: 420px; margin: 0 auto; background: #fff; border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08); padding: 24px; text-align: center;
+    }
+    h1 { font-size: 20px; margin-bottom: 10px; }
+    .info { text-align: left; font-size: 16px; margin-top: 14px; }
+    .row { margin: 10px 0; display: flex; justify-content: space-between; }
+    .label { color: #777; }
+    .value { font-weight: 600; word-break: break-all; }
+    .btns { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+    button {
+      background: #111; color: #fff; border: none; border-radius: 8px;
+      padding: 12px; font-size: 16px; cursor: pointer;
+    }
+    button:active { background: #222; }
+    footer { text-align: center; color: #999; margin-top: 24px; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>주차 할인 쿠폰 구매</h1>
+    <div class="info">
+      <div class="row"><span class="label">은행</span><span class="value" id="bank">카카오뱅크</span></div>
+      <div class="row"><span class="label">계좌번호</span><span class="value" id="account">7942-22-72661</span></div>
+      <div class="row"><span class="label">예금주</span><span class="value" id="owner">최은필</span></div>
+    </div>
+    <div class="btns">
+      <button id="copyAcct">계좌번호 복사</button>
+    </div>
+  </div>
+  <footer>© Parking Coupon Helper</footer>
+
+  <script>
+    const ACCOUNT = "7942-22-72661";
+
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text)
+          .then(() => alert("복사 완료: " + text))
+          .catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const el = document.createElement("textarea");
+      el.value = text;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+      alert("복사 완료: " + text);
+    }
+
+    document.getElementById("copyAcct").addEventListener("click", () => copyText(ACCOUNT));
+  </script>
+</body>
+</html>
